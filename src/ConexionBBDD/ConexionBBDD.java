@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ConexionBBDD {
@@ -194,5 +195,169 @@ public class ConexionBBDD {
 		}
 		
 		return HistorialTickets;					
+	}
+	
+	public void AñadirProd(String nomb_producto, String precio, String nomb_categoria) {
+		if(nomb_producto != "" && precio != "" && nomb_categoria != "") {
+			String query = "INSERT INTO JUPITER2.productos VALUES (" + nomb_producto + ", " + precio + ", " + nomb_categoria + ")";
+			try {
+				System.out.println(query);
+				Statement stmt = conexion.createStatement();
+				stmt.executeUpdate(query);
+				stmt.close();
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Error, necesita rellenar todos los campos");
+		}
+	}
+	
+	public void AñadirCat(String nomb_categoria) {
+		if(nomb_categoria != "") {
+			String query = "INSERT INTO JUPITER2.productos VALUES (" + nomb_categoria + ")";
+			try {
+				System.out.println(query);
+				Statement stmt = conexion.createStatement();
+				stmt.executeUpdate(query);
+				stmt.close();
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Error, necesita rellenar todos los campos");
+		}
+	}
+	
+	public void AñadirProdCom(String num_mesa, String comanda, String nomb_producto, String cantidad) {
+		if(num_mesa != "" && comanda != "" && nomb_producto != "" && cantidad != "") {
+			String query = "INSERT INTO JUPITER2.pedidos,  VALUES (" + num_mesa + ", " + comanda + ", " + nomb_producto + ", " + comanda + ")";
+			try {
+				System.out.println(query);
+				Statement stmt = conexion.createStatement();
+				stmt.executeUpdate(query);
+				stmt.close();
+				
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Error, necesita rellenar todos los campos");
+		}
+	}
+	
+	public void EliminarProd() {
+		String query = "DELETE * FROM JUPITER2.productos";
+		
+		try {
+			Statement stmt = conexion.createStatement();
+			stmt.executeUpdate(query);
+			stmt.close();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public DefaultTableModel OrdenarProd() {
+		String [] columnas={"ID","Nombre del Producto"};
+		String [] registro=new String[2];
+		DefaultTableModel Prod = new DefaultTableModel(null,columnas);
+		String query = "select id_producto, nomb_producto FROM JUPITER2.productos";
+		 
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				 registro[0]=rset.getString("id_producto");
+				 registro[1]=rset.getString("nomb_producto");
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return Prod;
+		
+	}
+	
+	public DefaultTableModel OrdenarProdCate() {
+		String [] columnas={"Categoria"};
+		String [] registro=new String[2];
+		DefaultTableModel ProductosCateg = new DefaultTableModel(null,columnas);
+		String query = "select nomb_producto, nomb_categoria FROM Jupiter2.productos p, JUPITER2.categoria c WHERE p.id_categoria = c.id_categoria order by p.id_categoria";
+		 
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				registro[0]=rset.getString("nomb_producto");
+				registro[1]=rset.getString("nomb_categoria");
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return ProductosCateg;
+		
+	}
+	
+	public DefaultTableModel OrdenarPrecio() {
+		String [] columnas={"Nombre del Producto", "Precio"};
+		String [] registro=new String[3];
+		DefaultTableModel Precio = new DefaultTableModel(null,columnas);
+		String query = "select nomb_producto, precio FROM JUPITER2.productos";
+		 
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				registro[0]=rset.getString("nomb_producto");
+				registro[1]=rset.getString("precio");
+				registro[1]+=" €";
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return Precio;
+		
+	}
+	
+	public DefaultTableModel OrdenarCategoria() {
+		String [] columnas={"ID", "Categoria"};
+		String [] registro=new String[2];
+		DefaultTableModel Categoria = new DefaultTableModel(null,columnas);
+		String query = "select id_categoria, nomb_categoria FROM JUPITER2.categoria";
+		 
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				registro[0]=rset.getString("id_categoria");
+				registro[1]=rset.getString("nomb_categoria");
+			}
+			rset.close();
+			stmt.close();
+			
+		}catch (SQLException s){
+			s.printStackTrace();
+		}
+		
+		return Categoria;
+		
 	}
 }

@@ -26,7 +26,7 @@ import javax.swing.ImageIcon;
 public class AñadirProductosII {
 
 	JFrame frame;
-	private JTextField textField;
+	private JTextField textNombreProd;
 	private JTable AñadirProductoProdCateg;
 
 	/**
@@ -80,19 +80,19 @@ public class AñadirProductosII {
 		lblNombre.setBounds(355, 85, 46, 14);
 		frame.getContentPane().add(lblNombre);
 		
-		textField = new JTextField();
-		textField.setBounds(420, 82, 100, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textNombreProd = new JTextField();
+		textNombreProd.setBounds(420, 82, 100, 20);
+		frame.getContentPane().add(textNombreProd);
+		textNombreProd.setColumns(10);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
 		lblCategoria.setBounds(355, 113, 63, 14);
 		frame.getContentPane().add(lblCategoria);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Todas las Categorias", "Refrescos", "Bebidas Alcoholicas", "Casqueria", "Carnes", "Pescados", "Sopas", "Entrantes", "Pizzas", "Ensaladas", "Arroces", "Bocadillos", "Postres", "Menu Infantil", "Hamburguesas", "Pasta", "Vinos"}));
-		comboBox.setBounds(420, 110, 148, 20);
-		frame.getContentPane().add(comboBox);
+		JComboBox Categoria = new JComboBox();
+		Categoria.setModel(new DefaultComboBoxModel(new String[] {"Todas las Categorias", "Refrescos", "Bebidas Alcoholicas", "Casqueria", "Carnes", "Pescados", "Sopas", "Entrantes", "Pizzas", "Ensaladas", "Arroces", "Bocadillos", "Postres", "Menu Infantil", "Hamburguesas", "Pasta", "Vinos"}));
+		Categoria.setBounds(420, 110, 148, 20);
+		frame.getContentPane().add(Categoria);
 		
 		
 		
@@ -109,14 +109,19 @@ public class AñadirProductosII {
 		AñadirProductoProdCateg.setModel(Prueba.AñadirProd());
 		
 		JButton btnNewButton = new JButton("A\u00F1adir");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton.setBounds(468, 342, 100, 57);
 		frame.getContentPane().add(btnNewButton);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Mesa 01", "Mesa 02", "Mesa 03", "Mesa 04", "Mesa 05", "Mesa 06", "Mesa 07", "Mesa 08", "Mesa 09", "Mesa 10", "Mesa 11", "Mesa 12", "Mesa 13", "Mesa 14", "Mesa 15"}));
-		comboBox_1.setBounds(120, 15, 100, 20);
-		frame.getContentPane().add(comboBox_1);
+		JComboBox Mesa = new JComboBox();
+		Mesa.setModel(new DefaultComboBoxModel(new String[] {"Mesa 01", "Mesa 02", "Mesa 03", "Mesa 04", "Mesa 05", "Mesa 06", "Mesa 07", "Mesa 08", "Mesa 09", "Mesa 10", "Mesa 11", "Mesa 12", "Mesa 13", "Mesa 14", "Mesa 15"}));
+		Mesa.setBounds(120, 15, 100, 20);
+		frame.getContentPane().add(Mesa);
 		
 		JLabel lblNumeroDeMesa = new JLabel("Numero de Mesa");
 		lblNumeroDeMesa.setBounds(10, 18, 100, 14);

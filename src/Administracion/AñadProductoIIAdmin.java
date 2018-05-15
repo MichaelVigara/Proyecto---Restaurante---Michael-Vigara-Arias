@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import ConexionBBDD.ConexionBBDD;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -16,8 +19,10 @@ import javax.swing.ImageIcon;
 public class AñadProductoIIAdmin {
 
 	public JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textNombre;
+	private JTextField textPrecio;
+	ConexionBBDD Prueba;
+
 
 	/**
 	 * Launch the application.
@@ -41,6 +46,8 @@ public class AñadProductoIIAdmin {
 	 */
 	public AñadProductoIIAdmin() {
 		initialize();
+		Prueba = new ConexionBBDD();
+
 	}
 
 	/**
@@ -56,30 +63,38 @@ public class AñadProductoIIAdmin {
 		lblNombre.setBounds(20, 36, 46, 14);
 		frame.getContentPane().add(lblNombre);
 		
-		textField = new JTextField();
-		textField.setBounds(90, 33, 130, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textNombre = new JTextField();
+		textNombre.setBounds(90, 33, 130, 20);
+		frame.getContentPane().add(textNombre);
+		textNombre.setColumns(10);
 		
 		JLabel lblPrecio = new JLabel("Precio");
 		lblPrecio.setBounds(24, 67, 46, 14);
 		frame.getContentPane().add(lblPrecio);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(90, 64, 130, 20);
-		frame.getContentPane().add(textField_1);
+		textPrecio = new JTextField();
+		textPrecio.setColumns(10);
+		textPrecio.setBounds(90, 64, 130, 20);
+		frame.getContentPane().add(textPrecio);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
 		lblCategoria.setBounds(10, 96, 60, 14);
 		frame.getContentPane().add(lblCategoria);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Todas las Categorias", "Refrescos", "Bebidas Alcoholicas", "Casqueria", "Carnes", "Pescados", "Sopas", "Entrantes", "Pizzas", "Ensaladas", "Arroces", "Bocadillos", "Postres", "Menu Infantil", "Hamburguesas", "Pasta", "Vinos"}));
-		comboBox.setBounds(76, 95, 144, 20);
-		frame.getContentPane().add(comboBox);
+		JComboBox comboBoxCategoria = new JComboBox();
+		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"Todas las Categorias", "Refrescos", "Bebidas Alcoholicas", "Casqueria", "Carnes", "Pescados", "Sopas", "Entrantes", "Pizzas", "Ensaladas", "Arroces", "Bocadillos", "Postres", "Menu Infantil", "Hamburguesas", "Pasta", "Vinos"}));
+		comboBoxCategoria.setBounds(76, 95, 144, 20);
+		frame.getContentPane().add(comboBoxCategoria);
 		
 		JButton btnNewButton = new JButton("A\u00F1adir");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String producto = textNombre.getText();
+				String precio = textPrecio.getText();
+				String categoria = (String) comboBoxCategoria.getSelectedItem();
+				Prueba.AñadirProd(producto, precio, categoria);
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnNewButton.setBounds(230, 32, 127, 83);
 		frame.getContentPane().add(btnNewButton);

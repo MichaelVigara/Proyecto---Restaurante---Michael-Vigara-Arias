@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import ConexionBBDD.ConexionBBDD;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JMenuBar;
@@ -15,7 +18,8 @@ import javax.swing.ImageIcon;
 public class AñadirCategoriaAdminII {
 
 	JFrame frame;
-	private JTextField textField;
+	ConexionBBDD Prueba;
+	private JTextField textNombCategoria;
 
 	/**
 	 * Launch the application.
@@ -39,6 +43,7 @@ public class AñadirCategoriaAdminII {
 	 */
 	public AñadirCategoriaAdminII() {
 		initialize();
+		Prueba = new ConexionBBDD();
 	}
 
 	/**
@@ -54,12 +59,18 @@ public class AñadirCategoriaAdminII {
 		lblNombre.setBounds(10, 11, 46, 14);
 		frame.getContentPane().add(lblNombre);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 36, 124, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textNombCategoria = new JTextField();
+		textNombCategoria.setBounds(10, 36, 124, 20);
+		frame.getContentPane().add(textNombCategoria);
+		textNombCategoria.setColumns(10);
 		
 		JButton button = new JButton("A\u00F1adir");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String categoria = textNombCategoria.getText();
+				Prueba.AñadirCat(categoria);
+			}
+		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		button.setBounds(163, 11, 98, 68);
 		frame.getContentPane().add(button);

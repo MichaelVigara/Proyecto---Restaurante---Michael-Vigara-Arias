@@ -43,6 +43,7 @@ public class AdminsitracionI {
 	private JButton btnListo;
 	private JButton btnAtras;
 	private JButton btnListar;
+	ConexionBBDD Prueba;
 
 	/**
 	 * Launch the application.
@@ -65,6 +66,7 @@ public class AdminsitracionI {
 	 * Create the application.
 	 */
 	public AdminsitracionI() {
+		Prueba = new ConexionBBDD();
 		initialize();
 	}
 
@@ -119,6 +121,7 @@ public class AdminsitracionI {
 		btnProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AñadProductoIIAdmin añadirprod = new AñadProductoIIAdmin();
+				AdministracionProdPreCatg.setModel(Prueba.Productos());
 				añadirprod.frame.setVisible(true);
 				
 				
@@ -161,8 +164,7 @@ public class AdminsitracionI {
 		
 		btnListar = new JButton("Actualizar");
 		btnListar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ConexionBBDD Prueba = new ConexionBBDD();
+			public void actionPerformed(ActionEvent arg0) {				
 				AdministracionProdPreCatg.setModel(Prueba.Productos());
 			}
 		});
@@ -178,6 +180,17 @@ public class AdminsitracionI {
 		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnBuscar.setBounds(722, 14, 47, 23);
 		frame.getContentPane().add(btnBuscar);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdministracionProdPreCatg.getSelectedRow();
+					Prueba.EliminarProd();				
+				}
+			
+		});
+		btnEliminar.setBounds(481, 386, 89, 23);
+		frame.getContentPane().add(btnEliminar);
 		
 		JLabel lblFondo = new JLabel("Fondo");
 		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo3.jpg"));
@@ -201,7 +214,6 @@ public class AdminsitracionI {
 				AñadirCategoriaAdminII añadircate = new AñadirCategoriaAdminII();
 				añadircate.frame.setVisible(true);
 			}
-
 		});
 		
 		JMenu mnCategorias = new JMenu("Categorias");
@@ -258,17 +270,56 @@ public class AdminsitracionI {
 
 		});
 		
-		JMenu mnListarProductos = new JMenu("Ordenar");
+		JMenu mnListarProductos = new JMenu("Mostrar");
 		mnVista.add(mnListarProductos);
 		
-		JCheckBoxMenuItem chckbxmntmProducto = new JCheckBoxMenuItem("Producto");
-		mnListarProductos.add(chckbxmntmProducto);
+		JMenu mnProducto = new JMenu("Producto");
+		mnListarProductos.add(mnProducto);
 		
-		JCheckBoxMenuItem chckbxmntmCategoria = new JCheckBoxMenuItem("Categoria");
-		mnListarProductos.add(chckbxmntmCategoria);
+		JMenuItem mntmProducto = new JMenuItem("Producto");
+		mnProducto.add(mntmProducto);
 		
-		JCheckBoxMenuItem chckbxmntmPrecio = new JCheckBoxMenuItem("Precio");
-		mnListarProductos.add(chckbxmntmPrecio);
+		JMenuItem mntmProductoPrecio = new JMenuItem("Producto + Precio");
+		mnProducto.add(mntmProductoPrecio);
+		
+		JMenuItem mntmProductoCategoria = new JMenuItem("Producto + Categoria");
+		mnProducto.add(mntmProductoCategoria);
+		
+		JMenuItem mntmCategoria = new JMenuItem("Categoria");
+		mnListarProductos.add(mntmCategoria);
+	
+		mntmProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConexionBBDD Prueba = new ConexionBBDD();
+				AdministracionProdPreCatg.setModel(Prueba.OrdenarProd());
+			}
+
+		});
+		
+		mntmProductoPrecio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConexionBBDD Prueba = new ConexionBBDD();
+				AdministracionProdPreCatg.setModel(Prueba.OrdenarPrecio());
+			}
+
+		});
+		
+		mntmProductoCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConexionBBDD Prueba = new ConexionBBDD();
+				AdministracionProdPreCatg.setModel(Prueba.OrdenarProdCate());
+			}
+
+		});
+		
+		mntmCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConexionBBDD Prueba = new ConexionBBDD();
+				AdministracionProdPreCatg.setModel(Prueba.OrdenarCategoria());
+			}
+
+		});
+		
 	}
 
 	
