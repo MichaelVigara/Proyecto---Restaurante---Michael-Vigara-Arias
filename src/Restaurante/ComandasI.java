@@ -8,7 +8,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Administracion.AñadProductoIIAdmin;
 import ConexionBBDD.ConexionBBDD;
 
 import javax.swing.JComboBox;

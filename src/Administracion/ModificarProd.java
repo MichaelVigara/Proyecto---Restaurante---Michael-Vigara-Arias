@@ -1,17 +1,18 @@
-package Orden;
+package Administracion;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class OrdenProdPrc {
+import ConexionBBDD.ConexionBBDD;
+
+public class ModificarProd {
 
 	private JFrame frame;
-	private JTable table;
+	private JTable ModProd;
 
 	/**
 	 * Launch the application.
@@ -20,7 +21,7 @@ public class OrdenProdPrc {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OrdenProdPrc window = new OrdenProdPrc();
+					ModificarProd window = new ModificarProd();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +33,7 @@ public class OrdenProdPrc {
 	/**
 	 * Create the application.
 	 */
-	public OrdenProdPrc() {
+	public ModificarProd() {
 		initialize();
 	}
 
@@ -41,27 +42,25 @@ public class OrdenProdPrc {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 395, 437);
+		frame.setBounds(100, 100, 577, 417);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 359, 328);
+		scrollPane.setBounds(10, 11, 336, 302);
 		frame.getContentPane().add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		ModProd = new JTable();
+		ModProd.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Nombre del Producto", "Precio"
+				"ID Producto", "Nombre del Producto", "Categoria"
 			}
 		));
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(ModProd);
 		
-		JButton btnAtras = new JButton("Atras");
-		btnAtras.setBounds(10, 364, 89, 23);
-		frame.getContentPane().add(btnAtras);
+		ConexionBBDD Prueba = new ConexionBBDD();
+		ModProd.setModel(Prueba.ModificarProd());
 	}
-
 }

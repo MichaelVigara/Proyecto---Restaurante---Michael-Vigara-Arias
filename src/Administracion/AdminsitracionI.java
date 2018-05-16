@@ -9,33 +9,27 @@ import javax.swing.table.DefaultTableModel;
 
 import ConexionBBDD.ConexionBBDD;
 import Inicio.Index;
-import Inicio.PanelI;
-import Restaurante.AñadirProductosII;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.Window;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class AdminsitracionI {
 
 	public JFrame frame;
 	private JTable AdministracionProdPreCatg;
 	private JLabel lblBuscar;
-	private JTextField textField;
-	private JButton btnBusqudaAvanzada;
+	private JTextField textBuscarProd;
 	private JLabel lblAadir;
 	private JButton btnProductos;
 	private JLabel lblAadirmodificar;
@@ -75,7 +69,7 @@ public class AdminsitracionI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 795, 493);
+		frame.setBounds(100, 100, 810, 493);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -97,21 +91,10 @@ public class AdminsitracionI {
 		lblBuscar.setBounds(581, 18, 46, 14);
 		frame.getContentPane().add(lblBuscar);
 		
-		textField = new JTextField();
-		textField.setBounds(626, 15, 86, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		btnBusqudaAvanzada = new JButton("Busqueda Avanzada");
-		btnBusqudaAvanzada.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BusquedaAvanzadaAdminII busqueda = new BusquedaAvanzadaAdminII();
-				busqueda.frame.setVisible(true);
-				
-			}
-		});
-		btnBusqudaAvanzada.setBounds(591, 46, 155, 23);
-		frame.getContentPane().add(btnBusqudaAvanzada);
+		textBuscarProd = new JTextField();
+		textBuscarProd.setBounds(626, 15, 86, 20);
+		frame.getContentPane().add(textBuscarProd);
+		textBuscarProd.setColumns(10);
 		
 		lblAadir = new JLabel("A\u00F1adir");
 		lblAadir.setBounds(608, 196, 46, 14);
@@ -176,10 +159,6 @@ public class AdminsitracionI {
 		btnListar.setBounds(626, 101, 122, 57);
 		frame.getContentPane().add(btnListar);
 		
-		JButton btnBuscar = new JButton("->");
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnBuscar.setBounds(722, 14, 47, 23);
-		frame.getContentPane().add(btnBuscar);
 		
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
@@ -192,9 +171,49 @@ public class AdminsitracionI {
 		btnEliminar.setBounds(481, 386, 89, 23);
 		frame.getContentPane().add(btnEliminar);
 		
+		JComboBox comboBoxCategoria = new JComboBox();
+		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"Todas las Categorias", "Refrescos", "Bebidas Alcoholicas", "Casqueria", "Carnes", "Pescados", "Sopas", "Entrantes", "Pizzas", "Ensaladas", "Arroces", "Bocadillos", "Postres", "Menu Infantil", "Hamburguesas", "Pasta", "Vinos"}));
+		comboBoxCategoria.setBounds(581, 43, 141, 20);
+		frame.getContentPane().add(comboBoxCategoria);
+		
+		JButton btnBuscar = new JButton("->");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String nomb_producto = textBuscarProd.getText();
+				Prueba.BuscarProdAdmin(nomb_producto);
+				AdministracionProdPreCatg.setModel(Prueba.BuscarProdAdmin(nomb_producto));
+
+			}
+		});
+		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnBuscar.setBounds(722, 14, 47, 23);
+		frame.getContentPane().add(btnBuscar);		
+		
+		JButton button = new JButton("->");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					String nomb_categoria =  (String) comboBoxCategoria.getSelectedItem();
+					if(nomb_categoria != "") {
+						if(nomb_categoria.equals("Todas las Categorias")) {
+							AdministracionProdPreCatg.setModel(Prueba.Productos());
+
+						}else {
+							AdministracionProdPreCatg.setModel(Prueba.BuscarCatAdmin(nomb_categoria));
+						}
+										
+				}
+			}
+		});
+		
+		
+		button.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		button.setBounds(732, 42, 47, 23);
+		frame.getContentPane().add(button);
+		
+		
 		JLabel lblFondo = new JLabel("Fondo");
 		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo3.jpg"));
-		lblFondo.setBounds(0, -26, 779, 459);
+		lblFondo.setBounds(0, -26, 794, 459);
 		frame.getContentPane().add(lblFondo);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -238,8 +257,8 @@ public class AdminsitracionI {
 		
 		mntmHistorialDePedidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HistorialPedidosII historialpe = new HistorialPedidosII();
-				historialpe.frame.setVisible(true);
+				ConexionBBDD Prueba = new ConexionBBDD();
+				AdministracionProdPreCatg.setModel(Prueba.HistorialPedidos());
 			}
 
 		});
@@ -249,8 +268,8 @@ public class AdminsitracionI {
 		
 		mntmHistorialDeTickets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HistorialTicketsII historialtick = new HistorialTicketsII();
-				historialtick.frame.setVisible(true);
+				ConexionBBDD Prueba = new ConexionBBDD();
+				AdministracionProdPreCatg.setModel(Prueba.HistorialTickets());
 			}
 
 		});
@@ -259,10 +278,10 @@ public class AdminsitracionI {
 		JMenu mnVista = new JMenu("Vista");
 		menuBar.add(mnVista);
 		
-		JMenuItem mntmVistaTotal = new JMenuItem("Vista Total");
-		mnVista.add(mntmVistaTotal);
+		JMenuItem mntmPredeterminado = new JMenuItem("Predeterminado");
+		mnVista.add(mntmPredeterminado);
 			
-		mntmVistaTotal.addActionListener(new ActionListener() {
+		mntmPredeterminado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConexionBBDD Prueba = new ConexionBBDD();
 				AdministracionProdPreCatg.setModel(Prueba.Productos());
@@ -270,7 +289,7 @@ public class AdminsitracionI {
 
 		});
 		
-		JMenu mnListarProductos = new JMenu("Mostrar");
+		JMenu mnListarProductos = new JMenu("Mostrar por");
 		mnVista.add(mnListarProductos);
 		
 		JMenu mnProducto = new JMenu("Producto");
@@ -287,19 +306,21 @@ public class AdminsitracionI {
 		
 		JMenuItem mntmCategoria = new JMenuItem("Categoria");
 		mnListarProductos.add(mntmCategoria);
+		
+		JMenuItem mntmVistaTotal = new JMenuItem("Vista Total");
+		mnListarProductos.add(mntmVistaTotal);
 	
 		mntmProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConexionBBDD Prueba = new ConexionBBDD();
-				AdministracionProdPreCatg.setModel(Prueba.OrdenarProd());
+				AdministracionProdPreCatg.setModel(Prueba.VerProd());
 			}
-
 		});
 		
 		mntmProductoPrecio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConexionBBDD Prueba = new ConexionBBDD();
-				AdministracionProdPreCatg.setModel(Prueba.OrdenarPrecio());
+				AdministracionProdPreCatg.setModel(Prueba.VerProdPrec());
 			}
 
 		});
@@ -307,7 +328,7 @@ public class AdminsitracionI {
 		mntmProductoCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConexionBBDD Prueba = new ConexionBBDD();
-				AdministracionProdPreCatg.setModel(Prueba.OrdenarProdCate());
+				AdministracionProdPreCatg.setModel(Prueba.VerProdCateg());
 			}
 
 		});
@@ -315,11 +336,18 @@ public class AdminsitracionI {
 		mntmCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConexionBBDD Prueba = new ConexionBBDD();
-				AdministracionProdPreCatg.setModel(Prueba.OrdenarCategoria());
+				AdministracionProdPreCatg.setModel(Prueba.VerCateg());
 			}
 
 		});
 		
+		mntmVistaTotal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConexionBBDD Prueba = new ConexionBBDD();
+				AdministracionProdPreCatg.setModel(Prueba.VerTotal());
+			}
+
+		});
 	}
 
 	

@@ -17,10 +17,6 @@ import ConexionBBDD.ConexionBBDD;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.ImageIcon;
 
 public class AñadirProductosII {

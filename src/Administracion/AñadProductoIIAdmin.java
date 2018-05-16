@@ -22,6 +22,7 @@ public class AñadProductoIIAdmin {
 	private JTextField textNombre;
 	private JTextField textPrecio;
 	ConexionBBDD Prueba;
+	private JTextField textID;
 
 
 	/**
@@ -89,10 +90,11 @@ public class AñadProductoIIAdmin {
 		JButton btnNewButton = new JButton("A\u00F1adir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String id_producto = textID.getText();
 				String producto = textNombre.getText();
 				String precio = textPrecio.getText();
 				String categoria = (String) comboBoxCategoria.getSelectedItem();
-				Prueba.AñadirProd(producto, precio, categoria);
+				Prueba.AñadirProd(id_producto, producto, precio, categoria);
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -111,6 +113,11 @@ public class AñadProductoIIAdmin {
 		JButton btnListo = new JButton("Listo");
 		btnListo.setBounds(287, 127, 70, 23);
 		frame.getContentPane().add(btnListo);
+		
+		textID = new JTextField();
+		textID.setBounds(90, 11, 31, 20);
+		frame.getContentPane().add(textID);
+		textID.setColumns(10);
 		
 		JLabel lblFondo = new JLabel("Fondo");
 		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo3.jpg"));
