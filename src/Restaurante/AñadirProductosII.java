@@ -16,8 +16,14 @@ import javax.swing.table.DefaultTableModel;
 import ConexionBBDD.ConexionBBDD;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import javax.swing.JSpinner;
 
 public class AñadirProductosII {
 
@@ -73,21 +79,19 @@ public class AñadirProductosII {
 		scrollPane.setViewportView(AñadirProductoProdCateg);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(355, 85, 46, 14);
+		lblNombre.setBounds(355, 145, 46, 14);
 		frame.getContentPane().add(lblNombre);
 		
 		textNombreProd = new JTextField();
-		textNombreProd.setBounds(420, 82, 100, 20);
+
+		textNombreProd.setBounds(468, 142, 100, 20);
 		frame.getContentPane().add(textNombreProd);
 		textNombreProd.setColumns(10);
 		
-		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(355, 113, 63, 14);
-		frame.getContentPane().add(lblCategoria);
-		
 		JComboBox Categoria = new JComboBox();
+
 		Categoria.setModel(new DefaultComboBoxModel(new String[] {"Todas las Categorias", "Refrescos", "Bebidas Alcoholicas", "Casqueria", "Carnes", "Pescados", "Sopas", "Entrantes", "Pizzas", "Ensaladas", "Arroces", "Bocadillos", "Postres", "Menu Infantil", "Hamburguesas", "Pasta", "Vinos"}));
-		Categoria.setBounds(420, 110, 148, 20);
+		Categoria.setBounds(10, 11, 148, 20);
 		frame.getContentPane().add(Categoria);
 		
 		
@@ -115,22 +119,67 @@ public class AñadirProductosII {
 		frame.getContentPane().add(btnNewButton);
 		
 		JComboBox Mesa = new JComboBox();
+
 		Mesa.setModel(new DefaultComboBoxModel(new String[] {"Mesa 01", "Mesa 02", "Mesa 03", "Mesa 04", "Mesa 05", "Mesa 06", "Mesa 07", "Mesa 08", "Mesa 09", "Mesa 10", "Mesa 11", "Mesa 12", "Mesa 13", "Mesa 14", "Mesa 15"}));
-		Mesa.setBounds(120, 15, 100, 20);
+		Mesa.setBounds(468, 173, 100, 20);
 		frame.getContentPane().add(Mesa);
+
+		
+		textNombreProd.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String nomb_producto = textNombreProd.getText();
+				Prueba.BuscarProdRestAñadProd(nomb_producto);
+				AñadirProductoProdCateg.setModel(Prueba.BuscarProdRestAñadProd(nomb_producto));
+
+			}
+		});
+		
 		
 		JLabel lblNumeroDeMesa = new JLabel("Numero de Mesa");
-		lblNumeroDeMesa.setBounds(10, 18, 100, 14);
+		lblNumeroDeMesa.setBounds(355, 176, 100, 14);
 		frame.getContentPane().add(lblNumeroDeMesa);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnBuscar.setBounds(503, 141, 65, 23);
-		frame.getContentPane().add(btnBuscar);
+
+		
+		Categoria.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent e) {
+				String nomb_producto = textNombreProd.getText();
+				String nomb_categoria =  (String) Categoria.getSelectedItem();
+				if(nomb_producto != "" || nomb_categoria != "") {
+					if(nomb_categoria.equals("Todas las Categorias")) {
+						AñadirProductoProdCateg.setModel(Prueba.AñadirProd());
+
+					}else {
+						AñadirProductoProdCateg.setModel(Prueba.BuscarCateRestAñadProd(nomb_categoria));
+					}
+										
+			}
+				}
+		});
+		
+		JLabel labelCantidad = new JLabel("Cantidad");
+		labelCantidad.setBounds(355, 207, 46, 14);
+		frame.getContentPane().add(labelCantidad);
+		
+		JSpinner Cantidad = new JSpinner();
+		Cantidad.setBounds(468, 204, 40, 20);
+		frame.getContentPane().add(Cantidad);
+			
 		
 		JLabel lblFondo = new JLabel("Fondo");
-		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo8.jpg"));
+		lblFondo.setIcon(new ImageIcon("imagenes\\fondo8.jpg"));
 		lblFondo.setBounds(-40, 0, 618, 506);
 		frame.getContentPane().add(lblFondo);
+		
+		AñadirProductoProdCateg.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			int row = AñadirProductoProdCateg.getSelectedRow();
+			String nomb_producto=AñadirProductoProdCateg.getValueAt(row, 0).toString();
+			textNombreProd.setText(nomb_producto);
+		}
+	});
 	}
 }

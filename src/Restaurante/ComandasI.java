@@ -20,6 +20,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ComandasI {
 
@@ -85,11 +87,14 @@ public class ComandasI {
 		ConexionBBDD Prueba = new ConexionBBDD();
 		ComandasMesaComProdCant.setModel(Prueba.Comandas());
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Todas las Mesas", "Mesa 01", "Mesa 02", "Mesa 03", "Mesa 04", "Mesa 05", "Mesa 06", "Mesa 07", "Mesa 08", "Mesa 09", "Mesa 10", "Mesa 11", "Mesa 12", "Mesa 13", "Mesa 14", "Mesa 15"}));
-		comboBox.setBounds(18, 271, 163, 40);
-		frame.getContentPane().add(comboBox);
+		JComboBox comboBoxMesas = new JComboBox();
+
+		comboBoxMesas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		comboBoxMesas.setModel(new DefaultComboBoxModel(new String[] {"Todas las Mesas", "Mesa 01", "Mesa 02", "Mesa 03", "Mesa 04", "Mesa 05", "Mesa 06", "Mesa 07", "Mesa 08", "Mesa 09", "Mesa 10", "Mesa 11", "Mesa 12", "Mesa 13", "Mesa 14", "Mesa 15"}));
+		comboBoxMesas.setBounds(18, 271, 163, 40);
+		frame.getContentPane().add(comboBoxMesas);
+		
+		
 		
 		JButton btnNewButton = new JButton("A\u00F1adir");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -102,8 +107,27 @@ public class ComandasI {
 		btnNewButton.setBounds(453, 271, 150, 43);
 		frame.getContentPane().add(btnNewButton);
 		
+
+		
+		comboBoxMesas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent e) {
+				String nomb_mesa =  (String) comboBoxMesas.getSelectedItem();
+				if(nomb_mesa != "") {
+					if(nomb_mesa.equals("Todas las Mesas")) {
+						ComandasMesaComProdCant.setModel(Prueba.Comandas());
+
+					}else {
+						ComandasMesaComProdCant.setModel(Prueba.BuscarMesa(nomb_mesa));
+					}
+									
+			}
+				}
+			
+		});
+		
 		JLabel lblFondo = new JLabel("Fondo");
-		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo8.jpg"));
+		lblFondo.setIcon(new ImageIcon("imagenes\\fondo8.jpg"));
 		lblFondo.setBounds(0, 0, 675, 325);
 		frame.getContentPane().add(lblFondo);
 		

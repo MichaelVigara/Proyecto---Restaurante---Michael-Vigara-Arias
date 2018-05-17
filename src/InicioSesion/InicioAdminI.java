@@ -7,14 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import java.awt.event.KeyEvent;
-import javax.swing.InputMap;
-import javax.swing.KeyStroke;
+
 
 import Administracion.AdminsitracionI;
-import Inicio.FondoI;
 import Inicio.Index;
-import Inicio.PanelI;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -115,8 +111,8 @@ public class InicioAdminI {
 		frame.getContentPane().add(textpass);
 		
 		JLabel lblFondo = new JLabel("Fondo");
-		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo3.jpg"));
-		lblFondo.setBounds(-404, -30, 631, 267);
+		lblFondo.setIcon(new ImageIcon("imagenes\\fondo6.jpg"));
+		lblFondo.setBounds(-414, -19, 700, 267);
 		frame.getContentPane().add(lblFondo);
 		
 		

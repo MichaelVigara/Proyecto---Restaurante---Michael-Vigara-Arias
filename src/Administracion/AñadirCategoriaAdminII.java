@@ -11,8 +11,13 @@ import ConexionBBDD.ConexionBBDD;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class AñadirCategoriaAdminII {
 
@@ -20,6 +25,7 @@ public class AñadirCategoriaAdminII {
 	ConexionBBDD Prueba;
 	private JTextField textNombCategoria;
 	private JTextField textIDCate;
+	private JTable IDCate;
 
 	/**
 	 * Launch the application.
@@ -51,16 +57,16 @@ public class AñadirCategoriaAdminII {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 288, 157);
+		frame.setBounds(100, 100, 470, 238);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(10, 11, 46, 14);
+		JLabel lblNombre = new JLabel("Categoria");
+		lblNombre.setBounds(243, 62, 61, 14);
 		frame.getContentPane().add(lblNombre);
 		
 		textNombCategoria = new JTextField();
-		textNombCategoria.setBounds(10, 36, 124, 20);
+		textNombCategoria.setBounds(316, 59, 124, 20);
 		frame.getContentPane().add(textNombCategoria);
 		textNombCategoria.setColumns(10);
 		
@@ -73,7 +79,7 @@ public class AñadirCategoriaAdminII {
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		button.setBounds(163, 11, 98, 68);
+		button.setBounds(342, 126, 98, 68);
 		frame.getContentPane().add(button);
 		
 		JButton btnAtras = new JButton("Atras");
@@ -82,29 +88,78 @@ public class AñadirCategoriaAdminII {
 				frame.setVisible(false);
 			}
 		});
-		btnAtras.setBounds(7, 90, 67, 23);
+		btnAtras.setBounds(12, 171, 67, 23);
 		frame.getContentPane().add(btnAtras);
 		
-		JButton btnListo = new JButton("Listo");
-		btnListo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String id_categoria = textIDCate.getText();
-				String categoria = textNombCategoria.getText();
-				Prueba.ModificarCategoria(id_categoria, categoria);
-			}
-		});
-		btnListo.setBounds(192, 90, 67, 23);
-		frame.getContentPane().add(btnListo);
-		
 		textIDCate = new JTextField();
-		textIDCate.setBounds(20, 59, 54, 20);
+		textIDCate.setBounds(404, 28, 36, 20);
 		frame.getContentPane().add(textIDCate);
 		textIDCate.setColumns(10);
 		
+		JLabel lblId = new JLabel("ID");
+		lblId.setBounds(379, 31, 61, 14);
+		frame.getContentPane().add(lblId);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+				int row = IDCate.getSelectedRow();
+				String id_categoria=IDCate.getValueAt(row, 0).toString();
+				String nomb_categoria=IDCate.getValueAt(row, 1).toString();
+				Prueba.EliminarCate(id_categoria, nomb_categoria);				
+			}
+		});
+		btnEliminar.setBounds(128, 152, 89, 23);
+		frame.getContentPane().add(btnEliminar);
+		
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String id_categoria = textIDCate.getText();
+				String nomb_categoria = textNombCategoria.getText();
+				Prueba.ModificarCategoria(id_categoria, nomb_categoria);
+				IDCate.setModel(Prueba.IDCategoria());
+			}
+		});
+		btnModificar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnModificar.setBounds(243, 152, 89, 42);
+		frame.getContentPane().add(btnModificar);
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 13, 209, 132);
+		frame.getContentPane().add(scrollPane);
+		
+		IDCate = new JTable();
+		IDCate.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "Categoria"
+			}
+		));
+		
+		ConexionBBDD Prueba = new ConexionBBDD();
+		IDCate.setModel(Prueba.IDCategoria());
+		
+		scrollPane.setViewportView(IDCate);
+		
 		JLabel lblFondo = new JLabel("Fondo");
-		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo3.jpg"));
-		lblFondo.setBounds(-571, -269, 855, 455);
+		lblFondo.setIcon(new ImageIcon("imagenes\\fondo3.jpg"));
+		lblFondo.setBounds(-571, -269, 1025, 483);
 		frame.getContentPane().add(lblFondo);
-	}
+		
+		IDCate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			int row = IDCate.getSelectedRow();
+			String id_categoria=IDCate.getValueAt(row, 0).toString();
+			String nomb_categoria=IDCate.getValueAt(row, 1).toString();
+			textIDCate.setText(id_categoria);
+			textNombCategoria.setText(nomb_categoria);
+		}
+	});
+		
 
+	}
 }

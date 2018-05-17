@@ -22,6 +22,8 @@ public class AñadirComII {
 				try {
 					AñadirComII window = new AñadirComII();
 					window.frame.setVisible(true);
+					window.frame.setResizable(false);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -64,7 +66,7 @@ public class AñadirComII {
 		frame.getContentPane().add(textField);
 		
 		JLabel lblFondo = new JLabel("Fondo");
-		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo8.jpg"));
+		lblFondo.setIcon(new ImageIcon("imagenes\\fondo8.jpg"));
 		lblFondo.setBounds(0, -11, 969, 533);
 		frame.getContentPane().add(lblFondo);
 		

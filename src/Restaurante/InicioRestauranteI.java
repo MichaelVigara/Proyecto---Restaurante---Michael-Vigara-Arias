@@ -23,6 +23,8 @@ public class InicioRestauranteI {
 				try {
 					InicioRestauranteI window = new InicioRestauranteI();
 					window.frame.setVisible(true);
+					window.frame.setResizable(false);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -89,7 +91,7 @@ public class InicioRestauranteI {
 		frame.getContentPane().add(btnTicket);
 		
 		JLabel lblFondo = new JLabel("Fondo");
-		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo8.jpg"));
+		lblFondo.setIcon(new ImageIcon("imagenes\\fondo8.jpg"));
 		lblFondo.setBounds(0, 0, 464, 158);
 		frame.getContentPane().add(lblFondo);
 	}

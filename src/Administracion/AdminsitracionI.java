@@ -23,6 +23,10 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AdminsitracionI {
 
@@ -88,11 +92,12 @@ public class AdminsitracionI {
 		scrollPane.setViewportView(AdministracionProdPreCatg);
 		
 		lblBuscar = new JLabel("Buscar");
-		lblBuscar.setBounds(581, 18, 46, 14);
+		lblBuscar.setBounds(591, 18, 45, 14);
 		frame.getContentPane().add(lblBuscar);
 		
 		textBuscarProd = new JTextField();
-		textBuscarProd.setBounds(626, 15, 86, 20);
+
+		textBuscarProd.setBounds(646, 15, 102, 20);
 		frame.getContentPane().add(textBuscarProd);
 		textBuscarProd.setColumns(10);
 		
@@ -163,8 +168,11 @@ public class AdminsitracionI {
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministracionProdPreCatg.getSelectedRow();
-					Prueba.EliminarProd();				
+				int row = AdministracionProdPreCatg.getSelectedRow();
+				String nomb_producto=AdministracionProdPreCatg.getValueAt(row, 0).toString();
+				Prueba.EliminarProd(nomb_producto);
+				AdministracionProdPreCatg.setModel(Prueba.Productos());
+				
 				}
 			
 		});
@@ -172,47 +180,44 @@ public class AdminsitracionI {
 		frame.getContentPane().add(btnEliminar);
 		
 		JComboBox comboBoxCategoria = new JComboBox();
+
 		comboBoxCategoria.setModel(new DefaultComboBoxModel(new String[] {"Todas las Categorias", "Refrescos", "Bebidas Alcoholicas", "Casqueria", "Carnes", "Pescados", "Sopas", "Entrantes", "Pizzas", "Ensaladas", "Arroces", "Bocadillos", "Postres", "Menu Infantil", "Hamburguesas", "Pasta", "Vinos"}));
-		comboBoxCategoria.setBounds(581, 43, 141, 20);
+		comboBoxCategoria.setBounds(601, 43, 168, 20);
 		frame.getContentPane().add(comboBoxCategoria);
 		
-		JButton btnBuscar = new JButton("->");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		
+		textBuscarProd.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
 				String nomb_producto = textBuscarProd.getText();
 				Prueba.BuscarProdAdmin(nomb_producto);
 				AdministracionProdPreCatg.setModel(Prueba.BuscarProdAdmin(nomb_producto));
-
 			}
 		});
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnBuscar.setBounds(722, 14, 47, 23);
-		frame.getContentPane().add(btnBuscar);		
-		
-		JButton button = new JButton("->");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-					String nomb_categoria =  (String) comboBoxCategoria.getSelectedItem();
-					if(nomb_categoria != "") {
-						if(nomb_categoria.equals("Todas las Categorias")) {
-							AdministracionProdPreCatg.setModel(Prueba.Productos());
 
-						}else {
-							AdministracionProdPreCatg.setModel(Prueba.BuscarCatAdmin(nomb_categoria));
-						}
-										
-				}
+
+		
+		comboBoxCategoria.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				String nomb_categoria =  (String) comboBoxCategoria.getSelectedItem();
+				if(nomb_categoria != "") {
+					if(nomb_categoria.equals("Todas las Categorias")) {
+						AdministracionProdPreCatg.setModel(Prueba.Productos());
+
+					}else {
+						AdministracionProdPreCatg.setModel(Prueba.BuscarCatAdmin(nomb_categoria));
+					}
+									
+			}
 			}
 		});
 		
 		
-		button.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		button.setBounds(732, 42, 47, 23);
-		frame.getContentPane().add(button);
-		
+
 		
 		JLabel lblFondo = new JLabel("Fondo");
-		lblFondo.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo3.jpg"));
+		lblFondo.setIcon(new ImageIcon("imagenes\\fondo3.jpg"));
 		lblFondo.setBounds(0, -26, 794, 459);
 		frame.getContentPane().add(lblFondo);
 		
@@ -228,10 +233,21 @@ public class AdminsitracionI {
 		JMenuItem mntmAadirProducto = new JMenuItem("A\u00F1adir Producto");
 		mnProductos.add(mntmAadirProducto);
 		
+		JMenuItem mntmModificarProducto = new JMenuItem("Modificar Producto");
+		mnProductos.add(mntmModificarProducto);
+		
+		mntmModificarProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ModificarProd modprod = new ModificarProd();
+				modprod.frame.setVisible(true);
+			}
+		});
+		
+		
 		mntmAadirProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AñadirCategoriaAdminII añadircate = new AñadirCategoriaAdminII();
-				añadircate.frame.setVisible(true);
+				AñadProductoIIAdmin añadirprod = new AñadProductoIIAdmin();
+				añadirprod.frame.setVisible(true);
 			}
 		});
 		
@@ -243,8 +259,8 @@ public class AdminsitracionI {
 		
 		mntmAadirModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AñadProductoIIAdmin añadirprod = new AñadProductoIIAdmin();
-				añadirprod.frame.setVisible(true);
+				AñadirCategoriaAdminII añadircate = new AñadirCategoriaAdminII();
+				añadircate.frame.setVisible(true);
 			}
 
 		});

@@ -72,7 +72,7 @@ public class Index {
 		frame.getContentPane().add(button_1);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DAW1\\Documents\\DAW1\\Programacion\\Marte\\Proyecto BBDD - Restaurante\\src\\Inicio\\fondo.jpg"));
+		lblNewLabel.setIcon(new ImageIcon("imagenes\\fondo.jpg"));
 		lblNewLabel.setBounds(0, 0, 734, 510);
 		frame.getContentPane().add(lblNewLabel);
 	}
